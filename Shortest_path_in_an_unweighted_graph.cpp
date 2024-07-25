@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+
 vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , int t){
 	// Creating adjacency list
     unordered_map<int, list<int>> adjList;
@@ -10,14 +11,15 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
         adjList[v].push_back(u);
     }
 
-    // Vectors to keep track of visited nodes and their parents
-    vector<int> visited(n + 1, 0);
-    vector<int> parent(n + 1, -1);
+    // Maps to keep track of visited nodes and their parents
+    unordered_map<int, bool> visited;
+    unordered_map<int, int> parent;
     queue<int> qu;
 
     // BFS initialization
     qu.push(s);
-    visited[s] = 1;
+    visited[s] = true;
+    parent[s] = -1;
 
     // BFS loop
     while(!qu.empty()) {
@@ -25,8 +27,8 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
         qu.pop();
 
         for(int x : adjList[val]) {
-            if(visited[x] == 0) {
-                visited[x] = 1;
+            if(!visited[x]) {
+                visited[x] = true;
                 parent[x] = val;
                 qu.push(x);
             }
